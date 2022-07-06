@@ -1,1 +1,2 @@
-# xnap-api
+# installment-api
+Public Installment API

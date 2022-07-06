@@ -1,0 +1,257 @@
+openapi: 3.0.0
+info:
+  title: Xnap Api External
+  version: 1.0.0
+servers:
+  - url: https://stg-apis.paysolutions.asia
+paths:
+  /xnap/api/payment:
+    post:
+      tags:
+        - Xnap Payment
+      summary: Create Xnap Pyment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                MerchantID: '12345'
+                ReferenceNo: '123456789012'
+                ProductDetail: test-xnap-123456789012
+                Name: CustomerName
+                Email: customer@gmail.com
+                XnapType: xnap
+                Amount: '500'
+                Fee: '0'
+      parameters:
+        - name: content-type
+          in: header
+          schema:
+            type: "string"
+            example: application/json
+            default: application/json
+        - name: apikey
+          in: header
+          schema:
+            type: "string"
+            example: dsgdfgdsfg
+      responses:
+       '200':
+          description: Response Payment 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: "string"
+                    example: "123124431234234"
+                  order_ref:
+                    type: "string"
+                    example: "123124431234234"
+                  currency_code:
+                    type: "string"
+                    example: "THB"
+                  amount: 
+                    type: "string"
+                    example: "123.45"
+                  qr_data:
+                    type: "string"
+                    example : "0234233"
+                  qr_currency_code:
+                    type: "string"
+                    example: "THB"
+                  qr_amount:
+                    type: "string"
+                    example: "123.45"
+                  qr_base64:
+                    type: "string"  
+                    example: "iVSDFGSDFSDF"
+                  updated_at:
+                    type: "string" 
+                    example : "2022-07-05T10:20:28+00:00" 
+                  created_at:
+                    type: "string" 
+                    example: "2022-07-05T10:20:28+00:00"
+  /orderdetail/orderdetailpost:
+    post:
+      tags:
+        - Xnap Payment
+      summary: Inquiry Data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                merchantId: '12345'
+                orderNo: x
+                refNo: '123456789012'
+                productDetail: QWERTY (for exclusion)
+      parameters:
+        - name: merchantId
+          in: header
+          schema:
+            type: integer
+          example: '12345'
+        - name: merchantSecretKey
+          in: header
+          schema:
+            type: "string"
+          example: ewrtesrtewtrewtert
+        - name: Content-Type
+          in: header
+          schema:
+            type: "string"
+            example: application/json
+            default: application/json
+        - name: apikey
+          in: header
+          schema:
+            type: "string"
+          example: dsfgdsfgdsfg
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    ReferenceNo: 
+                      type: "string"
+                      example: '202206040001'
+                    OrderNo: 
+                      type: "string"
+                      example: '100001139'
+                    MerchantID: 
+                      type: "integer"
+                      example: 12345
+                    ProductDetail: 
+                      type: "string"
+                      example: Product Detail
+                    Total:
+                      type: "float"
+                      example: 123.45
+                    CardType: 
+                      type: "string"
+                      example: x
+                    CustomerEmail:
+                      type: "string"
+                      example: customer@email.com
+                    CurrencyCode: 
+                      type: "string"
+                      example:  '00'
+                    Status:
+                      type: "string"
+                      example: 'Y'
+                    StatusName: 
+                      type: "string"
+                      example: Paid
+                    PostBackUrl: 
+                      type: "string"
+                      example: 'https://www.merchant-site.com/postback'
+                    PostBackParameters: 
+                      type: "string"
+                      example: 'refno=123456789012&merchantid=12312345&id=0014'
+                    PostBackMethod: 
+                      type: "string"
+                      example: P
+                    PostBackCompleted: 
+                      type: "boolean"
+                      example: true
+                    OrderDateTime: 
+                      type: "string"
+                      example: '2022-06-07T02:02:26.980+00:00'
+                    installment: 
+                      type: "string"
+                      example: "-"  
+
+definitions:
+  ResponsePayment:
+    type: "object"
+    properties:
+      order_id:
+        type: "string"
+        example: "123124431234234"
+      order_ref:
+        type: "string"
+        example: "123124431234234"
+      currency_code:
+        type: "string"
+        example: "THB"
+      amount: 
+        type: "string"
+        example: "123.45"
+      qr_data:
+        type: "string"
+        example : "0234233"
+      qr_currency_code:
+        type: "string"
+        example: "THB"
+      qr_amount:
+        type: "string"
+        example: "123.45"
+      qr_base64:
+        type: "string"  
+        example: "iVSDFGSDFSDF"
+      updated_at:
+        type: "string" 
+        example : "2022-07-05T10:20:28+00:00" 
+      created_at:
+        type: "string" 
+        example: "2022-07-05T10:20:28+00:00"                                     
+  Order:
+      type: "object"
+      properties:
+        ReferenceNo: 
+          type: "string"
+          example: '202206040001'
+        OrderNo: 
+          type: "string"
+          example: '100001139'
+        MerchantID: 
+          type: "integer"
+          example: 12345
+        ProductDetail: 
+          type: "string"
+          example: Product Detail
+        Total:
+          type: "float"
+          example: 123.45
+        CardType: 
+          type: "string"
+          example: x
+        CustomerEmail:
+          type: "string"
+          example: nancom@gmail.com
+        CurrencyCode: 
+          type: "string"
+          example:  '00'
+        Status:
+          type: "string"
+          example: 'Y'
+        StatusName: 
+          type: "string"
+          example: Paid
+        PostBackUrl: 
+          type: "string"
+          example: 'https://www.merchant-site.com/postback'
+        PostBackParameters: 
+          type: "string"
+          example: 'refno=123456789012&merchantid=12312345&id=0014'
+        PostBackMethod: 
+          type: "string"
+          example: P
+        PostBackCompleted: 
+          type: "boolean"
+          example: true
+        OrderDateTime: 
+          type: "string"
+          example: '2022-06-07T02:02:26.980+00:00'
+        installment: 
+          type: "string"
+          example: "-"          
